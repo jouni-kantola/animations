@@ -61,16 +61,19 @@ window.addEventListener("keydown", event => {
 
 const moveBox = (x = 0, y = 0) => {
   requestAnimationFrame(() => {
-    if (x) {
-      const displayX = `${x}px`;
-      box.style.left = displayX;
-      xPos.innerText = displayX;
-    }
-
-    if (y) {
-      const displayY = `${y}px`;
-      box.style.top = displayY;
-      yPos.innerText = displayY;
-    }
+    if (x) box.style.left = `${x}px`;
+    if (y) box.style.top = `${y}px`;
   });
 };
+
+const displayPosition = () => {
+  const x = +box.style.left.split("px")[0] || 0;
+  const y = +box.style.top.split("px")[0] || 0;
+
+  xPos.innerText = `${x}px`;
+  yPos.innerText = `${y}px`;
+
+  requestAnimationFrame(displayPosition);
+};
+
+displayPosition();
