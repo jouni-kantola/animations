@@ -34,6 +34,29 @@ document.addEventListener("mousemove", e => {
   }
 });
 
+document.addEventListener("touchstart", event => {
+  mousePressed = true;
+  isSelected = event.target.closest(boxSelector);
+  if (isSelected) {
+    box.classList.add(isActiveCssClass);
+  } else {
+    deselectBox();
+  }
+});
+
+document.addEventListener("touchend", () => {
+  mousePressed = false;
+});
+
+document.addEventListener("touchmove", e => {
+  if (isSelected && mousePressed) {
+    const { touches } = e;
+    const x = touches[0].clientX - 10;
+    const y = touches[0].clientY - 10;
+    moveBox(x, y);
+  }
+});
+
 window.addEventListener("keydown", event => {
   const moveBy = 10;
   if (isSelected) {
