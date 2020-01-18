@@ -5,54 +5,46 @@ const yPos = box.querySelector(".y");
 
 const isActiveCssClass = "is-active";
 
-let mousePressed = false;
+let isActive = false;
 let isSelected = false;
-document.addEventListener("mousedown", e => {
-  mousePressed = true;
+
+const activate = event => {
+  isActive = true;
   isSelected = event.target.closest(boxSelector);
   if (isSelected) {
     box.classList.add(isActiveCssClass);
   } else {
     deselectBox();
   }
-});
+};
+
+const deactivate = event => {
+  isActive = false;
+};
 
 const deselectBox = () => {
   box.classList.remove(isActiveCssClass);
   isSelected = false;
 };
 
-document.addEventListener("mouseup", e => {
-  mousePressed = false;
-});
+document.addEventListener("mousedown", activate);
+document.addEventListener("touchstart", activate);
+document.addEventListener("mouseup touchend", deactivate);
+document.addEventListener("mouseup", deactivate);
 
-document.addEventListener("mousemove", e => {
-  if (isSelected && mousePressed) {
-    const x = e.clientX - 10;
-    const y = e.clientY - 10;
+document.addEventListener("mousemove", event => {
+  if (isSelected && isActive) {
+    const x = event.clientX - 10;
+    const y = event.clientY - 10;
     moveBox(x, y);
   }
 });
 
-document.addEventListener("touchstart", event => {
-  mousePressed = true;
-  isSelected = event.target.closest(boxSelector);
-  if (isSelected) {
-    box.classList.add(isActiveCssClass);
-  } else {
-    deselectBox();
-  }
-});
-
-document.addEventListener("touchend", () => {
-  mousePressed = false;
-});
-
-document.addEventListener("touchmove", e => {
-  if (isSelected && mousePressed) {
-    const { touches } = e;
-    const x = touches[0].clientX - 10;
-    const y = touches[0].clientY - 10;
+document.addEventListener("touchmove", event => {
+  if (isSelected && isActive) {
+    const { touches } = event;
+    const x = Math.round(touches[0].clientX - 10);
+    const y = Math.round(touches[0].clientY - 10);
     moveBox(x, y);
   }
 });
