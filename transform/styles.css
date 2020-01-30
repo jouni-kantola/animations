@@ -1,0 +1,45 @@
+:root {
+  --cell-width: 20px;
+}
+
+.swing:active {
+  transform: rotate(calc(1turn / -2));
+}
+
+.flip:active {
+  transform: rotateX(calc(1turn / 2));
+}
+
+.grid.roll {
+  width: calc(2 * var(--cell-width));
+  transition: transform 2s linear, margin-left 2s ease-in;
+}
+
+.roll:active {
+  transform: rotate(calc(5turn));
+  margin-left: calc(100vw - 2 * var(--cell-width));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, var(--cell-width));
+  grid-auto-rows: var(--cell-width);
+  transition: transform 1s;
+  margin-bottom: 2rem;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.gray {
+  background-color: gray;
+}
